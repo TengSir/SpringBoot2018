@@ -6,8 +6,8 @@
 </head>
 <body>
 <div th:include="top.html"></div>
-<a  th:href="@{/login.html}">login</a>
-<a th:href="@{/register.html}">register</a>
+<a  th:href="@{login.html}">login</a>
+<a th:href="@{register.html}">register</a> <span th:if="${session.user  ne null}" ><span th:text="${session.user.username}"></span></span>
 
 
 </body>

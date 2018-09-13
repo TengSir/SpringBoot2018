@@ -24,35 +24,37 @@ public class UserControl {
     public String login(User user, Model  model, HttpSession session){
         System.out.println("login method");
 
+        System.out.println("login user info:"+user);
         User loginedUser=userService.processLogin(user);
-        System.out.println(loginedUser);
         if(loginedUser==null)
         {
-            return "/login.html";
+            model.addAttribute("loginResult","sucess");
+
+            return "login.html";
         }
         else{
             session.setAttribute("user",loginedUser);
-            return "/index";
+            model.addAttribute("loginResult","fail");
+            return "index";
         }
+    }
+    public String other(){
+
+        return null;
     }
     @RequestMapping("/register")
     public String register(User user,Model  model){
-        System.out.println(user);
-        System.out.println(userService);
-        userService.processRegister(user);
-        System.out.println("register method");
-        User u1=new User(1,"tengsir1","123");
-        User u2=new User(2,"tengsir2","12");
-        User u3=new User(3,"tengsir3","223");
+        System.out.println("register metho");
+        System.out.println("register user info:"+user);
+        boolean result=userService.processRegister(user);
 
-        ArrayList<User> us=new ArrayList<>();
-        us.add(u1);
-        us.add(u2);
-        us.add(u3);
-        model.addAttribute("users",us);
-
-
-        return "/index";
+        if(result) {
+            model.addAttribute("resgisterResult","sucess");
+            return "login.html";
+        }else{
+            model.addAttribute("resgisterResult","fail");
+            return "register.html";
+        }
     }
 
     /**

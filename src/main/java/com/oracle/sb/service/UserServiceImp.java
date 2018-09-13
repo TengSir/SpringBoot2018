@@ -17,7 +17,13 @@ public class UserServiceImp implements  UserService {
     public User processLogin(User user) {
 
         //对表单上提交过来的用户密码做加密操作
-        user.setPassword(MD5Util.MD5(user.getPassword()));
+        //数据库密码加密时采用了加盐操作，加盐策略是在取用户名的开头字符和最后字符组合密码生成最终的加密密码
+
+        String storedPassword=user.getUsername().substring(0,1)+user.getPassword()+user.getUsername().substring(user.getUsername().length()-2,user.getUsername().length());;
+
+
+        System.out.println(storedPassword);
+        user.setPassword(MD5Util.MD5(storedPassword));
         User u=userDAO.login(user);
         System.out.println("serive:加密"+user.getPassword());
         return u;
@@ -26,6 +32,11 @@ public class UserServiceImp implements  UserService {
     @Override
     public Boolean processRegister(User user) {
         System.out.println(userDAO);
-        return true;
+
+        String storedPassword=user.getUsername().substring(0,1)+user.getPassword()+user.getUsername().substring(user.getUsername().length()-2,user.getUsername().length());
+
+        user.setPassword(MD5Util.MD5(storedPassword));
+
+        return userDAO.register(user);
     }
 }

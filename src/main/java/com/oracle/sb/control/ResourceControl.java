@@ -12,6 +12,6 @@ public class ResourceControl {
     @RequestMapping("/{path}.html")
     public String gotoStaticResource(@PathVariable("path") String path){
         System.out.println("load resource:"+path+".html");
-        return "/"+path;
+        return path;
     }
 }

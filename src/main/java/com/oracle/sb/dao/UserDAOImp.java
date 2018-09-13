@@ -16,7 +16,9 @@ public class UserDAOImp extends BaseDAO implements  UserDAO {
     }
 
     @Override
-    public boolean register(User user) {
-        return false;
+    public boolean register(User user)
+    {
+        UserDAO  dao=getSqlSessionFactory().openSession().getMapper(UserDAO.class);
+        return dao.register(user);
     }
 }
